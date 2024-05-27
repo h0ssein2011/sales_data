@@ -10,7 +10,6 @@ def Generate_sidebar(data):
     status = data.status.unique()
     productline = data.productline.unique()
     country = data.country.unique()
-    city = data.city.unique()
     deal_size = data.dealsize.unique()
 
 
@@ -20,20 +19,18 @@ def Generate_sidebar(data):
     status = st.sidebar.multiselect("Choose status to show", status, status,key='multiselect1')
     productline = st.sidebar.multiselect("Choose product line to show", productline, productline,key='multiselect2')
     country = st.sidebar.multiselect("Choose country to show", country, country,key='multiselect4')
-    city = st.sidebar.multiselect("Choose city to show", city, city,key='multiselect5')
     deal_size = st.sidebar.multiselect("Choose deal_size to show", deal_size, deal_size,key='multiselect6')
 
 
-    return start_date,end_date,status,productline,country,city,deal_size
+    return start_date,end_date,status,productline,country,deal_size
 
 
 def filter_data(data):
-    start_date,end_date,status,productline,country,city,deal_size= Generate_sidebar(data)
+    start_date,end_date,status,productline,country,deal_size= Generate_sidebar(data)
     data = data.query('status.isin(@status)')
     data = data.query('orderdate >= @start_date and orderdate <= @end_date')
     data = data.query('productline.isin(@productline)')
     data = data.query('country.isin(@country)')
-    data = data.query('city.isin(@city)')
     data = data.query('dealsize.isin(@deal_size)')
     return data
 
